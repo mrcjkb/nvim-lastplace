@@ -1,3 +1,7 @@
+if vim.g.loaded_nvim_lastplace then
+  return
+end
+
 local lastplace = require('nvim-lastplace')
 
 -- Set defaults
@@ -19,3 +23,5 @@ vim.api.nvim_create_autocmd('BufRead', {
     })
   end,
 })
+
+vim.g.loaded_nvim_lastplace = true
