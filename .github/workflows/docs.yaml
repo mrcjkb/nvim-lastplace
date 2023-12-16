@@ -1,0 +1,38 @@
+name: Docs
+
+on:
+  push:
+    branches:
+    - main
+    - 'docs-*'
+    paths:
+    - '.github/**'
+    - 'doc/**'
+    - 'lua/**'
+
+jobs:
+  docs:
+    runs-on: ubuntu-latest
+    name: Generate documentation
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Install luajit
+      run: sudo apt install -y luajit
+
+    - name: Usage docs from README (panvimdoc)
+      uses: kdheepak/panvimdoc@main
+      with:
+        pandoc: README.md
+        vimdoc: nvim-lastplace
+        description: A Neovim plugin that intelligently reopens files at your last edit position.
+        version: "NVIM v0.8.0"
+        demojify: true
+        treesitter: true
+        shiftheadinglevelby: -1
+
+    - uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        commit_message: "docs: auto generate docs"
+        branch: ${{ github.head_ref }}
+        file_pattern: 'doc/*.txt'
