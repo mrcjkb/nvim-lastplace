@@ -34,19 +34,19 @@ local set_cursor_position = function()
     end
   end
   ---@diagnostic disable-next-line: param-type-mismatch
-  if fn.foldclosed('.') ~= -1 and lastplace.options.lastplace_open_folds == 1 then
+  if fn.foldclosed('.') ~= -1 and lastplace.options.open_folds == 1 then
     vim.api.nvim_command([[normal! zvzz]])
   end
 end
 
 function lastplace.lastplace_ft(buffer)
   -- Check if the buffer should be ignored
-  if vim.tbl_contains(lastplace.options.lastplace_ignore_buftype, vim.api.nvim_buf_get_option(buffer, 'buftype')) then
+  if vim.tbl_contains(lastplace.options.ignore_buftype, vim.api.nvim_buf_get_option(buffer, 'buftype')) then
     return
   end
 
   -- Check if the filetype should be ignored
-  if vim.tbl_contains(lastplace.options.lastplace_ignore_filetype, vim.api.nvim_buf_get_option(buffer, 'filetype')) then
+  if vim.tbl_contains(lastplace.options.ignore_filetype, vim.api.nvim_buf_get_option(buffer, 'filetype')) then
     -- reset cursor to first line
     vim.api.nvim_command([[normal! gg]])
     return
